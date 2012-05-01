@@ -1,0 +1,73 @@
+﻿.addon-header-wrapper {
+    width: 100%;
+}
+
+td.td_dl, td.td_status {
+    text-align: center;
+}
+
+.clear_it {
+    clear: both;
+}
+
+div.rex-addon-output.float_it {
+    float: left !important;
+    width: 49%;
+    margin-right: 14px;
+}
+
+.rex-addon-output {
+    position: relative;
+}
+
+.action_bar_wrapper {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+div.rex-addon-output.float_it.last {
+    margin-right: 0 !important;
+}
+
+.rex-table tr:hover {
+	background-color: #eee;
+}
+
+#ajax-result {
+	margin-bottom: 10px;
+}
+
+table tr.updateAvailable {
+	background-color: #a8e19f;
+}
+
+table tr.updateAvailable:hover {
+	background-color: #a8e19f;
+}
+
+input#search_lupe {
+     background: url("search.gif") no-repeat;
+     width: 22px;
+     height: 22px;
+}
+
+input#search_module,
+input#search_addon {
+    height: 20px;
+    width: 700px;
+    padding-left: 5px;
+    margin: 5px;
+}
+
+input#search_addon {
+	width: 735px;
+}
+
+#noresults {
+	display: none;
+}
+
+tr.noHover:hover {
+	background-color: transparent;
+}
