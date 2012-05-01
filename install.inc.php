@@ -3,7 +3,7 @@
   // Name
   $addonname = 'installer';
   // AUTOINSTALL THESE PLUGINS
-  $autoinstall = array('addon_installer','modul_installer');
+  $autoinstall = array('addon_installer','modul_installer', 'zip_installer');
   $msg = '';
   
 	$REX['ADDON']['install']['installer'] = true;
@@ -25,7 +25,7 @@
 
 	if (!rex_is_writable(dirname(__FILE__).'/temp/')) {
 		$REX['ADDON']['install']['installer'] = 0;
-		$REX['ADDON']['installmsg']['installer'] = "Das Verzeichnis /temp/ im Addonverzeichnis hat keine Schreibrechte";
+		$REX['ADDON']['installmsg']['installer'] = "Das Verzeichnis /temp/ im Addonverzeichnis hat keine Schreibrechte. Bitte wechsle ins Installer-Verzeichnis und setze die Schreibrechte für das Verzeichnis auf CHMOD 777";
 	}
 
   // GET ALL ADDONS & PLUGINS
