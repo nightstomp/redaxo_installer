@@ -22,16 +22,16 @@
 	<div class="rex-addon-output">
 		<h2 class="rex-hl2">Verfügbare Downloads
             <div class="action_bar_wrapper">
-                <a href="#" onclick="clearBox();"><img src="media/addons/installer/close.gif" /></a>
+                <a href="#" class="closebox"><img src="media/addons/installer/close.gif" /></a>
             </div>
 		</h2>
 			<?php 
 				
-				echo rex_info('Bitte wähle jetzt ein Paket.<br />Alle hier gezeigten Downloads sind laut Entwickler kompatibel mit deinem System REX '.$REX['VERSION'].'.'.$REX['SUBVERSION'].'.'.$REX['MINORVERSION'].'');
+				echo rex_info('Bitte wähle jetzt ein Paket.<br />Alle hier gezeigten Downloads sind laut Entwickler kompatibel mit REX '.rex_session('userexversion').'. Du nutzt Version '.$REX['VERSION'].'.'.$REX['SUBVERSION'].'. Bitte beachte zusätzlich alle Entwicklerhinweise, bevor du ein AddOn installierst.');
 
 				if(Installer_check_if_addon_exists($REX['INCLUDE_PATH']."/addons/".$installname))
 				{
-					echo rex_warning('Achtung: Das Addon existiert bereits auf Deinem System. Wenn du die Installation fortführst, werden alle Daten von diesem AddOn überschrieben. Sollte es sich hierbei um ein Update des AddOns handeln, musst du dieses eventuell im Anschluss unter dem Menüpunkt AddOn "re-installieren". Dies ist normalerweise nur notwendig, wenn Datenbankabhängigkeiten vom Addon aus bestehen. Bitte lege sicherheitshalber ein Backup des AddOns und der Datenbank an. ');
+					echo rex_warning('Achtung: Das Addon existiert bereits auf Deinem System. Wenn du die Installation fortführst, werden alle Daten von diesem AddOn überschrieben. Sollte es sich hierbei um ein Update des AddOns handeln, musst du dieses eventuell im Anschluss "re-installieren". Dies ist normalerweise nur notwendig, wenn Datenbankabhängigkeiten vom Addon aus bestehen. Bitte lege sicherheitshalber ein Backup des AddOns und der Datenbank an.');
 				}
 				
 				// Debug only
@@ -47,7 +47,7 @@
 					if($ergebnis > 0)
 					{
 						echo '
-						<table class="rex-table">
+						<table class="rex-table install-modal">
 							<tr>
 								<!--<th>Addon</th>-->
 								<th>Version</th>
@@ -95,7 +95,7 @@
 										<td>' . $addon_text_versions . '</td>
 										<td>' . $dateTime['date'] . ' um ' . $dateTime['time'] .'</td>
 										<td>'.$installable.'</td>
-										<td><a onclick="return loadViaAjax(this.href);" href="?page=installer&subpage=addon_installer&pluginpage=install&func=curl&addonfile=' . $addon->file_path . '&installname='.urlencode($addon->addon_key).'&addonname='.urlencode($addon->addon_name).'"><img src="media/file_add.gif" title="Installieren" alt="Installieren"/></a></td>
+										<td><a href="#" class="install-addon-link" data-addon="?page=installer&subpage=addon_installer&pluginpage=install&func=curl&addonfile=' . $addon->file_path . '&installname='.urlencode($addon->addon_key).'&addonname='.urlencode($addon->addon_name).'"><img src="media/file_add.gif" title="Installieren" alt="Installieren"/></a></td>
 									</tr>';
 							}
 							
@@ -125,8 +125,8 @@ if($func == "curl")
 		    
 		    if($installname == "installer")
     		{
-    		    $success_msg = rex_info('Du hast soeben den Installer selbst geupdated. Du musst es <a href="?page=addon&addonname=installer&install=1">reinstallieren, bitte klicke hier</a>');
-    		    
+    		    $success_msg = rex_info('Der Installer wurde geupdated. Der Re-Install wurde automatisch durchgeführt. Es sind keine weiteren Aktionen notwendig.');
+    			$success_msg .= '<span class="force_reinstall" style="display:none"></span>';
     		} else {
     		    $success_msg = rex_info('Das AddOn "'.$addonname.'" wurde soeben geladen, entpackt und steht nun unter <a href="?page=addon">AddOn</a> zur Verfügung. Damit Du das neue AddOn nutzen kannst, musst Du es jetzt oder später installieren und aktivieren.');
     		}
@@ -134,7 +134,16 @@ if($func == "curl")
 			echo '
 				<div class="rex-addon-output">
 					<h2 class="rex-hl2">Installation abgeschlossen</h2>
+				    <div class="action_bar_wrapper">
+				    	<a href="#" class="closebox"><img src="media/addons/installer/close.gif" /></a>
+            		</div>
 					'.$success_msg.'
+			        <ul class="action_after_unzip">
+			            <li><a href="#" data-installname="'.str_replace('/', '', $installname).'" class="zip_install_activate">AddOn (re-)installieren und gleichzeitig aktivieren</a></li>
+			            <li><a href="#" data-installname="'.str_replace('/', '', $installname).'" class="zip_install">AddOn nur (re-)installieren</a></li>
+			            <li><a href="?page=addon">Ins AddOn-Verzeichnis wechseln</a></li>
+			      		<li><a href="#" class="closebox">Beenden</a></li>
+			        </ul>
 				</div>';
 				
 				// Funktion zum löschen des AddonCache aufrufen.
@@ -143,6 +152,9 @@ if($func == "curl")
 			echo '
 				<div class="rex-addon-output">
 					<h2 class="rex-hl2">Installation abgebrochen</h2>
+					<div class="action_bar_wrapper">
+				    	<a href="#" class="closebox"><img src="media/addons/installer/close.gif" /></a>
+            		</div>
 					'.rex_warning('Installer hat den Setup-Prozess des AddOns "'.$addonname.'" abgebrochen, da das übermittelte AddOn die Sicherheitsprüfungen nicht bestanden hat. Dies kann folgende Gründe haben: <br /><br />- Fehlerhafter AddOn-Key auf REDAXO.de eingetragen (Ordnername muss exakt wie AddonKey sein)<br />- Paket ist kein AddOn, sondern eine Modifikation o.ä. (Beschreibung beachten)<br />- Wichtige AddOn-Daten fehlen. (config.inc.php, install.inc.php etc.)<br /<br />Installer überträgt nur einwandfreie AddOns, um maximale Sicherheit zu bieten. Du kannst das Risiko jedoch selbst eingehen, und die <a href="'.$addonfile.'">Datei runterladen,</a> sichten und ggf. selbst hochladen.').'
 				</div>';
 		}	
@@ -151,7 +163,7 @@ if($func == "curl")
 		echo '
 			<div class="rex-addon-output">
 				<h2 class="rex-hl2">Fehler</h2>
-				'.rex_warning('Das AddOn "'.$addonname.'" konnte nicht von Redaxo.de übertragen werden!').'
+				'.rex_warning('Das AddOn "'.$addonname.'" konnte nicht von Redaxo.org übertragen werden!').'
 			</div>';
 	}
 	

@@ -35,11 +35,11 @@
 	if(is_array($_SESSION['modulesAsArray'])){
     	foreach ($_SESSION['modulesAsArray'] as $key => $module)
     	{
-    		$moduleList .= '<tr>';
+    		$moduleList .= '<tr data-addon="?page=installer&subpage=modul_installer&pluginpage=install&moduleid='.$module['id'].'">';
     		$moduleList .= '<td>'.$module['name'].'</td>';
     		$moduleList .= '<td>'.$module['shortdescription'].'</td>';
     		//$moduleList .= '<td><textarea>'.htmlentities($module['module_in']).'</textarea></td>';
-    		$moduleList .= '<td>'.Installer_getModuleInstallUrl($module['id'], $addon[0]['addon_label'], $addon[0]['file_path']).'</td>';
+    		$moduleList .= '<td><img src="media/addons/installer/install.gif" alt="Mit Installer laden" title="Mit Installer laden" /></td>';
     		$moduleList .= '</tr>';
     		
     		$foundSomething = $module['id']; // Bissi dirty, benötige jedoch einen Wert um zu Prüfen, ob Suche korrekt war, da das Array immer gefüllt ist.
@@ -50,6 +50,7 @@
 ?>
 
 
+	<?php echo rex_warning('ACHTUNG: Der Modulinstaller liefert aktuell wenige Ergebnisse für neue Redaxo-Versionen, da die Entwickler die Versionsangaben nicht angepasst haben.'); ?>
 
 	<div class="rex-addon-output">
 		<h2 class="rex-hl2">Module suchen</h2>
@@ -69,7 +70,7 @@
             	<div class="rex-addon-output">
             		<h2 class="rex-hl2">Module Installieren (<?php echo count($_SESSION['modulesAsArray']); ?> gefunden)</h2>
             		
-            				<table class="rex-table">
+            				<table class="rex-table" id="installer-addonlist">
             					<tr>
             						<th>Modul-Name</th>
             						<th>Beschreibung</th>

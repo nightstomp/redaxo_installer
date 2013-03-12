@@ -1,30 +1,3 @@
-<style type="text/css">
-    .rex-hl2 {
-        font-size: 12px;
-    }
-    
-    #action_after_unzip {
-        padding: 0px;
-        list-style-type: none;
-    }
-    
-    #action_after_unzip li {
-        padding: 5px 10px;
-        border-bottom: 1px solid #eee;
-        background: #f5f5f5;
-        color: #999;
-    }
-    
-    #action_after_unzip li:hover {
-        background: #eee;
-        border-bottom: 1px solid #f5f5f5;
-    }
-    
-    #action_after_unzip li a {
-        display: block;
-    }
-    
-</style>
 <?php
     // Variablen
 	$parent                 = 'installer';
@@ -121,73 +94,12 @@
             			
             			echo rex_info('ZIP-Datei wurde entpackt und ins AddOns Verzeichnis geschrieben. Bitte wähle nun eine Aktion:');
         			    echo '
-        			        <ul id="action_after_unzip">
-        			            <li><a href="javascript:void(0)" data-installname="'.str_replace('/', '', $installname).'" id="zip_install_activate">AddOn (re-)installieren und gleichzeitig aktivieren</a></li>
-        			            <li><a href="javascript:void(0)" data-installname="'.str_replace('/', '', $installname).'" id="zip_install">AddOn nur (re-)installieren</a></li>
+        			        <ul class="action_after_unzip">
+        			            <li><a href="#" data-installname="'.str_replace('/', '', $installname).'" class="zip_install_activate">AddOn (re-)installieren und gleichzeitig aktivieren</a></li>
+        			            <li><a href="#" data-installname="'.str_replace('/', '', $installname).'" class="zip_install">AddOn nur (re-)installieren</a></li>
         			            <li><a href="?page=addon">Ins AddOn-Verzeichnis wechseln</a></li>
-        			            <li><a href="javascript:void(0)" id="new_zip_upload">Neue ZIP-Datei hochladen</a></li>
+        			            <li><a href="#" class="new_zip_upload">Neue ZIP-Datei hochladen</a></li>
         			        </ul>
-        			        
-        			        <script type="text/javascript">
-        			            jQuery(document).ready(function(){
-        			                
-        			                jQuery("#zip_install, #zip_install_activate").click(function(event){
-        			                    event.preventDefault();
-        			                    
-        			                    jQuery(".package_detail").remove();
-        			                    jQuery(".rex-info").html("<p><span>Versuche Installation...</span></p>");
-        			                    
-        			                    var linkEl = jQuery(this);
-        			                    var linkParent = jQuery(this).parent();
-        			                    jQuery(this).html("Bitte warten...");
-        			                    
-                                        jQuery.ajax({
-                                          url: "?page=addon&addonname="+jQuery(this).attr("data-installname")+"&install=1",
-                                          success: function(data) {
-                                                            			                    
-                                              var res = jQuery(data);
-                                              var err = res.find(".rex-warning");
-                                              var cor = res.find(".rex-info");
-                                              
-                                              if(err.length > 0){
-                                                  linkEl.parent().html("Fehler: <br /><br />" + err.html());
-                                                  jQuery(".rex-info").removeClass("rex-info").addClass("rex-warning").html("<p><span>Installation leider fehlgeschlagen...</span></p>");
-                                              }
-
-                                              if(linkEl.attr("id") == "zip_install_activate" && cor.length > 0){
-                                                  jQuery(".rex-info").html("<p><span>Install OK, versuche Aktivierung...</span></p>");
-                                                  jQuery("#zip_install").parent().html(cor.html());
-                                                  linkEl.parent().html("Aktiviere, bitte warten...");
-                                                  
-                                                  var xhr = jQuery.ajax({
-                                                    url: "?page=addon&addonname="+linkEl.attr("data-installname")+"&activate=1",
-                                                    success: function(data) {
-                                                      var res2 = jQuery(data);
-                                                      var cor2 = res2.find(".rex-info");
-                                                      linkParent.html(cor2.html());
-                                                      
-                                                      jQuery(".rex-info").html("<p><span>AddOn erfolgreich installert &amp; aktiviert! <a href=\"\">Seite reloaden?</a></span></p>");
-                                                      
-                                                      xhr.abort();
-                                                    }
-                                                  });
-                                                  
-                                              } else {
-                                                     if(cor.length > 0){
-                                                         linkEl.parent().html(cor.html());
-                                                         jQuery(".rex-info").html("<p><span>Installation war erfolgreich :)</span></p>");
-                                                    }
-                                              }
-                                          }
-                                        });
-                                    });
-                                    
-                                    jQuery("#new_zip_upload").click(function(){
-                                        jQuery("#zip_installer_output").fadeOut();
-                                    });
-        			            });
-        			           
-        			        </script>
         			    ';
             			
         			} else {

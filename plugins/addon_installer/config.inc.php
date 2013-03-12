@@ -10,13 +10,6 @@ $REX['ADDON']['author'][$mypage] 	= 'Hirbod Mirjavadi';
 $REX['ADDON']['dir'][$mypage] 		= dirname(__FILE__);
 
 
-$addonApi			= 'http://www.redaxo.org/de/_system/_webservice/addons/?v='.$REX['VERSION'].'.'.$REX['SUBVERSION'];
-$addonDetailUrl		= 'http://www.redaxo.org/de/download/addons/?addon_id=';
-$addonDir			= 'addons/'.$mypage;
-$tmpDir				= 'temp';
-$tmpFile			= 'temp.zip';
-
-
 	if ($REX['REDAXO']) {
   
 	  $REX['ADDON']['installer_plugins'][$parent][$mypage]['subpages'][] =

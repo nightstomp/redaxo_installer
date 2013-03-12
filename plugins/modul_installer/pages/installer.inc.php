@@ -15,7 +15,7 @@
 	<div class="rex-addon-output">
 		<h2 class="rex-hl2">Verfügbare Downloads
 		    <div class="action_bar_wrapper">
-                <a href="#" onclick="clearBox();"><img src="media/addons/installer/close.gif" /></a>
+                <a href="#" class="closebox"><img src="media/addons/installer/close.gif" /></a>
             </div>
 		</h2>
 			<?php 
@@ -60,7 +60,7 @@
 										<td><textarea onfocus="this.select();">' . htmlentities(utf8_decode($module->input)) . '</textarea></td>
 										<td><textarea onfocus="this.select();">' . htmlentities(utf8_decode($module->output)) . '</textarea></td>
 										<td>' . $dateTime['date'] . ' um ' . $dateTime['time'] .'</td>
-										<td><a onclick="return loadViaAjax(this.href);" href="?page=installer&subpage=modul_installer&pluginpage=install&func=curl&module_id='.$module->id.'&module_name='.urlencode($module->name).'"><img src="media/file_add.gif" title="Installieren" alt="Installieren"/></a></td>
+										<td><a href="#" class="install-addon-link" data-addon="?page=installer&subpage=modul_installer&pluginpage=install&func=curl&module_id='.$module->id.'&module_name='.urlencode($module->name).'"><img src="media/file_add.gif" title="Installieren" alt="Installieren"/></a></td>
 									</tr>';
 							}
 							
@@ -98,6 +98,9 @@ if($func == "curl")
 		echo '
 			<div class="rex-addon-output">
 				<h2 class="rex-hl2">Installation abgeschlossen</h2>
+				<div class="action_bar_wrapper">
+                	<a href="#" class="closebox"><img src="media/addons/installer/close.gif" /></a>
+            	</div>
 				'.rex_info('Das Modul "'.$module_name.'" wurde installiert und steht nun unter  <a href="?page=module">Module</a> zur Verfügung.').'
 			</div>';
 
@@ -106,6 +109,9 @@ if($func == "curl")
 		echo '
 			<div class="rex-addon-output">
 				<h2 class="rex-hl2">Fehler</h2>
+				<div class="action_bar_wrapper">
+                	<a href="#" class="closebox"><img src="media/addons/installer/close.gif" /></a>
+            	</div>
 				'.rex_warning('Das Modul konnte nicht installiert werden!').'
 			</div>';
 	}

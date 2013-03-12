@@ -88,17 +88,18 @@
 			$updateAvailable = "";
 			if(checkAddonVersion(OOAddon::getVersion($addon[0]['addon_key']), $addon[0]['file_version']))
 			{
-				$updateAvailable = 'class="updateAvailable"';
+				$updateAvailable = 'updateAvailable';
 				$updatesAvailable++; // Wert für Verfügbare Addons hochzählen
 			}
 			
 			if($addon[0]['addon_key'] == "installer"){
 				$installer_version = $addon[0]['file_version'];
+				$installer_direkt_install_url = '?page=installer&subpage=addon_installer&pluginpage=install&addonurl='.$addon[0]['file_path'].'&addonid='.$key.'&installname='.$addon[0]['addon_key'];
 			}
 		
 			
-			$addonList .= '<tr '.$updateAvailable.' class="searchable">';
-			$addonList .= '<td>'.Installer_getDetailUrl($addonDetailUrl, $key, $addon[0]['addon_name'], $addon[0]['addon_key']).'</td>';
+			$addonList .= '<tr class="'.$updateAvailable.' searchable" data-addon="?page=installer&subpage=addon_installer&pluginpage=install&addonurl='.$addon[0]['file_path'].'&addonid='.$key.'&installname='.$addon[0]['addon_key'].'">';
+			$addonList .= '<td class="addon-on-redaxo">'.Installer_getDetailUrl($addonDetailUrl, $key, $addon[0]['addon_name'], $addon[0]['addon_key']).'</td>';
 			$addonList .= '<td>'.$addon[0]['file_version'].'</td>';
 			$addonList .= '<td>'.$systemVersion.'</td>';
 			
@@ -114,13 +115,13 @@
 			
 			$addonList .= '<td>'.$addon_text_overview.'</td>';
 			$addonList .= '<td class="td_status">'.$addon_status.'</td>';
-			$addonList .= '<td "class="td_dl">'.Installer_getAddonInstallUrl($key, $addon[0]['addon_key'], $addon[0]['file_path']).'</td>';
+			$addonList .= '<td "class="td_dl"><img src="media/addons/installer/install.gif" alt="Mit Installer laden" title="Mit Installer laden" /></td>';
 			$addonList .= '</tr>';
 			
 		}
 		
 		if(checkAddonVersion(OOAddon::getVersion('installer'), $installer_version)){
-			echo rex_info('Es steht ein Update des Installers zur Verfügbar. <a href="#installer">Jetzt Installieren</a>');
+			echo rex_info('Es steht ein Update des Installers zur Verfügbar. <a href="#" class="install-addon-link" data-addon="'.$installer_direkt_install_url.'">Jetzt Installieren</a>');
 		}
 ?>
 
@@ -166,8 +167,6 @@
     	</div>
 		<?php
 		}
-		if($REX["ADDON"]["installer"]["settings"]["SELECT"]["display_information"])
-		{
 		?>
 
     	<div class="rex-addon-output float_it last">
@@ -196,26 +195,51 @@
         			</tr>
         			
         			<tr>
-        			    <td>Verfügbare AddOns für Deine Version (REX <?php echo $REX['VERSION'].'.'.$REX['SUBVERSION']; ?>)</td>
+        			    <td>
+        			    	<p>Verfügbare AddOns für Deine Versionsauswahl <strong>REX <?php echo rex_session('userexversion'); ?></strong>.</p><br>
+        			    	<p>Deine REX-Version: <strong><?php echo $REX['VERSION'].'.'.$REX['SUBVERSION'].'.'.$REX['MINORVERSION']; ?></strong></p>
+        			    </td>
         			    <td><?php echo count(Installer_group_addons_by_id($_SESSION['addonsAsArray'])); ?></td>
-        			    <td></td>
+        			    <td>
+        			    	<?php
+        			    		$versions = array('4.0', '4.1', '4.2', '4.3', '4.4', '4.5');
+        			    		
+        			    		$versions_out = '
+        			    			<p class="forceversion" title="Viele AddOn-Versionen sind untereinander kompatibel, die Entwickler haben eventuell die Versionsangabe nur noch nicht angepasst. Wird der Wert dieser Box verstellt, bezieht Installer die AddOns aus dem gewählten Versionspool. Achtung: Nicht alle AddOn-Versionen sind unter verschiedenen Systemen kompatibel. Bitte installiere nur AddOns von älteren Versionen, wenn du dir sicher bist, was du tust!">
+        			    				<span>Andere Version erzwingen?</span>
+        			    			</p>';
+        			    		$versions_out .= '
+        			    		<form action="" method="get">
+        			    			<input type="hidden" name="page" value="installer" />
+        			    			<input type="hidden" name="subpage" value="addon_installer">
+        			    			<select name="versionswitch" class="forceversionselect">';
+        			    		foreach($versions as $v) {
+        			    			$addSelected = '';
+        			    			if(rex_session('userexversion') == $v) {
+        			    				$addSelected = 'selected="selected"';
+        			    			}
+
+        			    			$versions_out .= '<option '.$addSelected.' value="'.$v.'">REX '.$v.'</option>';
+        			    		}
+        			    		$versions_out .= '</select></form>';
+        			    		echo $versions_out;
+        			    	?>
+        			    </td>
         			</tr>
         			    			
         			<tr>
         			    <td>Verfügbare Updates</td>
         			    <td><?php echo $updatesAvailable; ?></td>
-        			    <td></td>
+        			    <td><a href="#" class="showupdates">Updates anzeigen</a></td>
         			</tr>
         		</table>
     	</div>
-		<?php
-		}
-		?>
+
     </div>
 	
 	<div class="clear_it"></div>
 	
-	<div class="rex-addon-output">
+	<div class="rex-addon-output addon-search-wrapper">
 		<h2 class="rex-hl2">AddOns durchsuchen</h2>
             <input type="text" id="search_addon" name="search_addon" />
 	</div>
@@ -225,9 +249,9 @@
 		    <div class="action_bar_wrapper"><a title="Ruft die Liste erneut von Redaxo.org ab und leert den Cache der Liste" href="?page=installer&subpage=<?php echo $mypage ?>&force=refreshList"><img src="media/addons/installer/refresh.gif" alt="Refresh" /></a>
 		    </div>
 	    </h2>
-				<table class="rex-table" id="addonList">
+				<table class="rex-table" id="installer-addonlist">
 					<tbody>
-						<tr>
+						<tr class="tableheadline">
 							<th>Addon-Name</th>
 							<th>Verfügbare Version</th>
 							<th>Installierte Version</th>
@@ -240,7 +264,7 @@
 						?>
 						
 						<tr class="noHover" id="noresults">
-							<td colspan="6">Sorry, die Suche lieferte leider keine Resultate!</td>
+							<td colspan="6">Die Suche lieferte leider keine Resultate!</td>
 						</tr>
 					</tbody>
 				</table>

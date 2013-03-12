@@ -57,15 +57,6 @@ $tmp->setSelected($myREX['settings']['SELECT'][$id]);         // gespeicherte We
 $select1 = $tmp->get();                                        // HTML in Variable speichern
 
 
-$id = "display_information";                                   // ID dieser Select Box
-$tmp = new rex_select();                                      // rex_select Objekt initialisieren
-$tmp->setSize(1);                                             // 1 Zeilen = normale Selectbox
-$tmp->setName('SELECT['.$id.']');
-$tmp->addOption('nein',0);                                    // Beschreibung ['string'], Wert [int|'string']
-$tmp->addOption('ja',1);
-$tmp->setSelected($myREX['settings']['SELECT'][$id]);         // gespeicherte Werte einsetzen
-$select2 = $tmp->get();   
-
 $id = "nl2br_overview";                                                        // ID dieser Select Box
 $tmp = new rex_select();                                      // rex_select Objekt initialisieren
 $tmp->setSize(1);                                             // 1 Zeilen = normale Selectbox
@@ -156,14 +147,6 @@ echo '
               <p class="rex-form-col-a rex-form-select">
                 <label for="select">Legende auf der Startseite anzeigen?</label>
                 '.$select1.'
-              </p>
-            </div><!-- .rex-form-row -->
-
-
-          <div class="rex-form-row">
-              <p class="rex-form-col-a rex-form-select">
-                <label for="select">Informationen auf der Startseite anzeigen?</label>
-                '.$select2.'
               </p>
             </div><!-- .rex-form-row -->
 			

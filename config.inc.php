@@ -5,20 +5,12 @@ $myself = 'installer'; // only for this file
 
 $REX['ADDON']['page'][$mypage] 		= $mypage;
 $REX['ADDON']['rxid'][$mypage] 		= '823';
-$REX['ADDON']['version'][$mypage] 	= '1.5.2';
+$REX['ADDON']['version'][$mypage] 	= '1.9.2';
 $REX['ADDON']['author'][$mypage] 	= 'Hirbod Mirjavadi';
 $REX['ADDON']['dir'][$mypage] 		= dirname(__FILE__);
 $REX['ADDON']['navigation'][$mypage] = array('block'=>'system');
 $REX['ADDON']['name'][$mypage] 		= 'Installer';
 $REX['ADDON']['perm'][$mypage] = 'admin[]';
-
-
-$addonApi			= 'http://www.redaxo.org/de/_system/_webservice/addons/?v='.$REX['VERSION'].'.'.$REX['SUBVERSION'];
-$addonDetailUrl		= 'http://www.redaxo.org/de/download/addons/?addon_id=';
-$addonDir			= 'addons/'.$mypage;
-$tmpDir				= 'temp';
-$tmpFile			= 'temp.zip';
-
 
 
 // Addon-Subnavigation für das REDAXO-Menue
@@ -60,7 +52,6 @@ $REX['ADDON'][$mypage]['SUBPAGES_DOCKED'] = array (
 // --- DYN
 $REX["ADDON"]["installer"]["settings"]["SELECT"] = array (
   'display_legend' => '0',
-  'display_information' => '1',
   'nl2br_overview' => '1',
   'nl2br_versions' => '1',
   'linkconvert_overview' => '1',
@@ -100,6 +91,27 @@ if ($REX['REDAXO'] && $REX['USER'] && rex_request('page', 'string') == 'installe
 	require_once $REX['INCLUDE_PATH'].'/addons/installer/functions/regex.func.php';
 	
 	rex_register_extension('PAGE_HEADER', 'Installer_add_assets');
+#
+
+
+  // finally, some global vars and config-informations
+  $versionswitch = rex_request('versionswitch', 'string');
+
+  if($versionswitch) {
+      Installer_clearSessionCache();
+      $useVersion = $versionswitch;
+      rex_set_session('userexversion', $useVersion);
+  } else if(!rex_session('userexversion')) {
+    $useVersion = $REX['VERSION'].'.'.$REX['SUBVERSION'];
+    rex_set_session('userexversion', $useVersion);
+  }
+
+  $addonApi     = 'http://www.redaxo.org/de/_system/_webservice/addons/?v='.rex_session('userexversion');
+
+  $addonDetailUrl   = 'http://www.redaxo.org/de/download/addons/?addon_id=';
+  $addonDir         = 'addons/'.$mypage;
+  $tmpDir           = 'temp';
+  $tmpFile          = 'temp.zip';
 
 }
 
