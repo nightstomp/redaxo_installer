@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // ADDON PARAMETER AUS URL HOLEN
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ $tmp->setName('SELECT['.$id.']');
 $tmp->addOption('nein',0);                                    // Beschreibung ['string'], Wert [int|'string']
 $tmp->addOption('ja',1);
 $tmp->setSelected($myREX['settings']['SELECT'][$id]);         // gespeicherte Werte einsetzen
-$select3 = $tmp->get();   
+$select3 = $tmp->get();
 
 $id = "nl2br_versions";                                       // ID dieser Select Box
 $tmp = new rex_select();                                      // rex_select Objekt initialisieren
@@ -73,7 +73,7 @@ $tmp->setName('SELECT['.$id.']');
 $tmp->addOption('nein',0);                                    // Beschreibung ['string'], Wert [int|'string']
 $tmp->addOption('ja',1);
 $tmp->setSelected($myREX['settings']['SELECT'][$id]);         // gespeicherte Werte einsetzen
-$select4 = $tmp->get();   
+$select4 = $tmp->get();
 
 $id = "linkconvert_overview";                                                         // ID dieser Select Box
 $tmp = new rex_select();                                      // rex_select Objekt initialisieren
@@ -82,7 +82,7 @@ $tmp->setName('SELECT['.$id.']');
 $tmp->addOption('nein',0);                                    // Beschreibung ['string'], Wert [int|'string']
 $tmp->addOption('ja',1);
 $tmp->setSelected($myREX['settings']['SELECT'][$id]);         // gespeicherte Werte einsetzen
-$select5 = $tmp->get();   
+$select5 = $tmp->get();
 
 $id = "linkconvert_versions";                                 // ID dieser Select Box
 $tmp = new rex_select();                                      // rex_select Objekt initialisieren
@@ -91,7 +91,7 @@ $tmp->setName('SELECT['.$id.']');
 $tmp->addOption('nein',0);                                    // Beschreibung ['string'], Wert [int|'string']
 $tmp->addOption('ja',1);
 $tmp->setSelected($myREX['settings']['SELECT'][$id]);         // gespeicherte Werte einsetzen
-$select6 = $tmp->get();   
+$select6 = $tmp->get();
 
 $id = "overwrite_zip_packages";                                 // ID dieser Select Box
 $tmp = new rex_select();                                      // rex_select Objekt initialisieren
@@ -149,29 +149,29 @@ echo '
                 '.$select1.'
               </p>
             </div><!-- .rex-form-row -->
-			
-			<div class="rex-form-row">
+
+      <div class="rex-form-row">
               <p class="rex-form-col-a rex-form-select">
                 <label for="select">Zeilenumbrüche in Beschreibungstext (Übersicht)?</label>
                 '.$select3.'
               </p>
             </div><!-- .rex-form-row -->
-			
-			<div class="rex-form-row">
+
+      <div class="rex-form-row">
               <p class="rex-form-col-a rex-form-select">
                 <label for="select">Zeilenumbrüche in Beschreibungstext (Versionen)?</label>
                 '.$select4.'
               </p>
             </div><!-- .rex-form-row -->
-			
-			<div class="rex-form-row">
+
+      <div class="rex-form-row">
               <p class="rex-form-col-a rex-form-select">
                 <label for="select">Links im Beschreibungstext umwandeln? (Übersicht)</label>
                 '.$select5.'
               </p>
             </div><!-- .rex-form-row -->
-			
-			<div class="rex-form-row">
+
+      <div class="rex-form-row">
               <p class="rex-form-col-a rex-form-select">
                 <label for="select">Links im Beschreibungstext umwandeln? (Versionen)</label>
                 '.$select6.'
@@ -184,15 +184,15 @@ echo '
                 '.$select7.'
               </p>
             </div><!-- .rex-form-row -->
-            
+
             <div class="rex-form-row">
               <p class="rex-form-col-a rex-form-select">
                 <label for="select">Paketinhalte anzeigen?</label>
                 '.$select8.'
               </p>
             </div><!-- .rex-form-row -->
-			
-			<div class="rex-form-row rex-form-element-v2">
+
+      <div class="rex-form-row rex-form-element-v2">
               <p class="rex-form-submit">
                 <input class="rex-form-submit" type="submit" id="submit" name="submit" value="Einstellungen speichern" />
               </p>
