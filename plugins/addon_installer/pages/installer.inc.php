@@ -5,7 +5,7 @@
 	$addonid		= rex_request('addonid', 'int');
 	$func			= rex_request('func', 'string');
 	$addonfile		= rex_request('addonfile','string');
-	$installname	= rex_request('installname', 'string');
+	$installname		= rex_request('installname', 'string');
 	
 	// Für Settings
 	$addon_text_versions = "";
@@ -80,11 +80,11 @@
 								$addon_text_versions = ($addon->file_description ? $addon->file_description : $addon->addon_description);
 								
 								if($REX["ADDON"]["installer"]["settings"]["SELECT"]["linkconvert_versions"]) {
-									$addon_text_versions = Installer_url_to_link($addon_text_versions);
+									$addon_text_versions = Installer_url_to_link(strip_tags($addon_text_versions));
 								}
 			
 								if($REX["ADDON"]["installer"]["settings"]["SELECT"]["nl2br_versions"]) {
-									$addon_text_versions = nl2br($addon_text_versions);
+									$addon_text_versions = nl2br(strip_tags($addon_text_versions));
 								}
 								
 								echo '
