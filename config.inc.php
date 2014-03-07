@@ -77,9 +77,9 @@ if ($REX['REDAXO'] && $REX['USER'] && rex_request('page', 'string') == 'installe
 		require_once $REX['INCLUDE_PATH'].'/addons/installer/classes/unzip.class.php';
 	}
     
-    if(!class_exists('rex_socket'))
+    if(!class_exists('rex_installer_socket'))
 	{
-        require_once $REX['INCLUDE_PATH'].'/addons/installer/classes/socket.class.php';
+        require_once $REX['INCLUDE_PATH'].'/addons/installer/classes/rex_installer_socket.class.php';
 	}
 	
 	// functions einbinden

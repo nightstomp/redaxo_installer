@@ -6,12 +6,12 @@ function Installer_download_file_from_redaxo($file, $path)
   $file_output = '';
 
   try {
-    $socket = rex_socket::createByUrl($file);
+    $socket = rex_installer_socket::createByUrl($file);
     $socket->doGet();
     $res = fopen($path, 'w');
     $file_output = $socket->writeBodyTo($res);
 
-  } catch (rex_socket_exception $e) {
+  } catch (rex_installer_socket_exception $e) {
       // fehlermeldung:
        echo rex_warning($e->getMessage());
   }

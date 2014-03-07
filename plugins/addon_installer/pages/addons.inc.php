@@ -202,7 +202,7 @@
         			    <td><?php echo count(Installer_group_addons_by_id($_SESSION['addonsAsArray'])); ?></td>
         			    <td>
         			    	<?php
-        			    		$versions = array('4.0', '4.1', '4.2', '4.3', '4.4', '4.5');
+        			    		$versions = array('4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '4.6');
         			    		
         			    		$versions_out = '
         			    			<p class="forceversion" title="Viele AddOn-Versionen sind untereinander kompatibel, die Entwickler haben eventuell die Versionsangabe nur noch nicht angepasst. Wird der Wert dieser Box verstellt, bezieht Installer die AddOns aus dem gewählten Versionspool. Achtung: Nicht alle AddOn-Versionen sind unter verschiedenen Systemen kompatibel. Bitte installiere nur AddOns von älteren Versionen, wenn du dir sicher bist, was du tust!">

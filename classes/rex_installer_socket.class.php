@@ -5,7 +5,7 @@
 *
 * @author gharlan
 */
-class rex_socket
+class rex_installer_socket
 {
   private $prefix;
   private $host;
@@ -38,7 +38,7 @@ class rex_socket
     $parts = parse_url($url);
     if(!isset($parts['host']))
     {
-      throw new rex_socket_exception('It isn\'t possible to parse the URL "'. $url .'"!');
+      throw new rex_installer_socket_exception('It isn\'t possible to parse the URL "'. $url .'"!');
     }
     $host = $parts['host'];
     $path = (isset($parts['path'])     ? $parts['path']          : '/')
@@ -51,7 +51,7 @@ class rex_socket
       $supportedProtocols = array('http', 'https');
       if(!in_array($parts['scheme'], $supportedProtocols))
       {
-        throw new rex_socket_exception('Unsupported protocol "'. $parts['scheme'] .'". Supported protocols are '. implode(', ', $supportedProtocols). '.');
+        throw new rex_installer_socket_exception('Unsupported protocol "'. $parts['scheme'] .'". Supported protocols are '. implode(', ', $supportedProtocols). '.');
       }
       if($parts['scheme'] == 'https')
       {
@@ -104,11 +104,11 @@ class rex_socket
   {
     if(!is_string($data) && !is_callable($data))
     {
-      throw new rex_socket_exception(sprintf('Expecting $data to be a string or a callable, but %s given!', gettype($data)));
+      throw new rex_installer_socket_exception(sprintf('Expecting $data to be a string or a callable, but %s given!', gettype($data)));
     }
     if(!($this->fp = @fsockopen($this->prefix . $this->host, $this->port, $errno, $errstr)))
     {
-      throw new rex_socket_exception($errstr .' ('. $errno .')');
+      throw new rex_installer_socket_exception($errstr .' ('. $errno .')');
     }
 
     stream_set_timeout($this->fp, $this->timeout);
@@ -144,7 +144,7 @@ class rex_socket
     $meta = stream_get_meta_data($this->fp);
     if($meta['timed_out'])
     {
-      throw new rex_socket_exception('Timeout!');
+      throw new rex_installer_socket_exception('Timeout!');
     }
 
     while(!feof($this->fp) && strpos($this->header, "\r\n\r\n") === false)
@@ -297,7 +297,7 @@ class rex_socket
   }
 }
 
-class rex_socket_exception extends Exception
+class rex_installer_socket_exception extends Exception
 {
   public function __construct($message, $code = E_USER_ERROR)
   {

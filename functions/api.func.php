@@ -8,11 +8,11 @@
 	{
     
         try {
-            $socket = rex_socket::createByUrl($pathToApi);
+            $socket = rex_installer_socket::createByUrl($pathToApi);
             $socket->doGet();
             $file_output = $socket->getBody();
             
-        } catch (rex_socket_exception $e) {
+        } catch (rex_installer_socket_exception $e) {
             // fehlermeldung:
              echo rex_warning($e->getMessage());
         }

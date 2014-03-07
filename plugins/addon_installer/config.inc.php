@@ -5,7 +5,7 @@ $parent = 'installer';
 
 $REX['ADDON']['page'][$mypage] 		= $mypage;
 $REX['ADDON']['rxid'][$mypage] 		= '823';
-$REX['ADDON']['version'][$mypage] 	= '1.3';
+$REX['ADDON']['version'][$mypage] 	= '1.4';
 $REX['ADDON']['author'][$mypage] 	= 'Hirbod Mirjavadi';
 $REX['ADDON']['dir'][$mypage] 		= dirname(__FILE__);
 
