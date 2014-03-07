@@ -5,7 +5,7 @@ $myself = 'installer'; // only for this file
 
 $REX['ADDON']['page'][$mypage] 		= $mypage;
 $REX['ADDON']['rxid'][$mypage] 		= '823';
-$REX['ADDON']['version'][$mypage] 	= '1.9.3';
+$REX['ADDON']['version'][$mypage] 	= '1.9.4';
 $REX['ADDON']['author'][$mypage] 	= 'Hirbod Mirjavadi';
 $REX['ADDON']['dir'][$mypage] 		= dirname(__FILE__);
 $REX['ADDON']['navigation'][$mypage] = array('block'=>'system');
