@@ -27,11 +27,11 @@
                 if($remote_file){
                     try {
                         $path = $REX['INCLUDE_PATH']."/addons/installer/" . time() . ".zip";
-                        $socket = rex_socket::createByUrl($remote_file);
+                        $socket = rex_installer_socket::createByUrl($remote_file);
                         $socket->doGet();
                         $res = @fopen($path, 'w');
                         $file_output = $socket->writeBodyTo($res);
-                    } catch (rex_socket_exception $e) {
+                    } catch (rex_installer_socket_exception $e) {
                         // fehlermeldung:
                          echo rex_warning($e->getMessage());
                          $file_output = false;
